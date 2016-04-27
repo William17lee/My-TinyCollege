@@ -13,7 +13,7 @@ namespace mytinycollege.Models
         [Display(Name = "Office Location")]
         public string Location { get; set; }
 
-        public virtual Instructor Instrutor { get; set; }
+        public virtual Instructor Instructor { get; set; }
 
     }
 }
