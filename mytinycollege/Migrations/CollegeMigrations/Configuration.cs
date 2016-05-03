@@ -78,17 +78,17 @@ namespace mytinycollege.Migrations.CollegeMigrations
                                  HireDate=DateTime.Parse("1996-09-01"),
                                  Email= "zlablanc@tinycollege.com"},
             };
-            instructor.ForEach(s => context.Instrutors.AddOrUpdate(p => p.Email, s));
+            instructor.ForEach(s => context.Instructors.AddOrUpdate(p => p.Email, s));
             context.SaveChanges();
 
             var departments = new List<Department>
             {
                 new Department { Name="Engineering", Budget = 350000,
                                  StartDate=DateTime.Parse("2010-09-01"),
-                                 InstrustorID= 1},
+                                 InstructorID= 1},
                 new Department { Name="English", Budget = 150000,
                                  StartDate=DateTime.Parse("2010-09-01"),
-                                 InstrustorID= 2},
+                                 InstructorID= 2},
             };
             departments.ForEach(s => context.Departments.AddOrUpdate(p => p.Name, s));
             context.SaveChanges();

@@ -16,10 +16,29 @@ namespace mytinycollege.Controllers
         private SchoolContext db = new SchoolContext();
 
         // GET: Course
-        public ActionResult Index()
+        public ActionResult Index(int? SelectedDepartment)
         {
-            var courses = db.Courses.Include(c => c.Department);
+            //var departments = db.Departments.OrderBy(d => d.Name).ToList();
+            //ViewBag.SelectedDepartment = new SelectList(departments, "DepartmentID", "Name", SelectedDepartment);
+
+            IQueryable<Course> courses = GetCourses(SelectedDepartment);
+
+
+            //var courses = db.Courses.Include(c => c.Department);
             return View(courses.ToList());
+        }
+
+        private IQueryable<Course> GetCourses(int? selectedDepartment)
+        {
+            var departments = db.Departments.OrderBy(d => d.Name).ToList();
+            ViewBag.SelectedDepartment = new SelectList(departments, "DepartmentID", "Name", selectedDepartment);
+
+            int departmentID = selectedDepartment.GetValueOrDefault();
+            IQueryable<Course> courses = db.Courses
+                .Where(c => !selectedDepartment.HasValue || c.DepartmentID == departmentID)
+                .OrderBy(d => d.CourseID)
+                .Include(d=>d.Department);
+            return courses;
         }
 
         // GET: Course/Details/5
